@@ -1,0 +1,23 @@
+module buggy_flop_2_sync (
+  input wire data, 
+  input wire clk, 
+  input wire rst_n,
+  input wire enable,
+  output reg sync2);
+//Added sync2 as an output so the synchronized signal can be used outside the module
+
+  reg sync1;
+
+  always @(posedge clk or negedge rst_n)
+    begin if (!rst_n) begin
+      sync1 <= 1'b0;
+      sync2 <= 1'b0;
+    end
+      else begin
+        sync1 <= data;
+        sync2 <= sync1 & enable;
+//Logic between sync stages 
+    end
+    end
+  
+endmodule
